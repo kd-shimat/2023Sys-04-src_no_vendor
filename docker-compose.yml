@@ -12,6 +12,19 @@ services:
     volumes:
       - db-data:/var/lib/mysql
       - ./sql/:/docker-entrypoint-initdb.d/
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    volumes:
+      - phpmyadmin-data:/sessions
   php:
     image: nyanzo/phptest-buster:latest
     depends_on:
@@ -29,3 +42,4 @@ services:
 
 volumes:
   db-data:
+  phpmyadmin-data:
